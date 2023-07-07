@@ -4,22 +4,31 @@ const CalculationForm = () => {
   const [hypoConc, setHypoConc] = useState(10);
   const [reservoirVolume, setReservoirVolume] = useState(15);
   const [reservoirLevel, setReservoirLevel] = useState(50);
-  const [dailyFlow, setDailyFlow] = useState(0);
-  const [incomingChloramineLevel, setIncomingChloramineLevel] = useState(0);
+  const [dailyFlow, setDailyFlow] = useState(4);
+  const [incomingChloramineLevel, setIncomingChloramineLevel] = useState(1);
   const [currentFreeChlorineLevel, setCurrentFreeChlorineLevel] = useState(0);
-  const [currentChloramineLevel, setCurrentChloramineLevel] = useState(0);
-  const [targetFreeChlorine, setTargetFreeChlorine] = useState(0);
-  const [doseRate, setDoseRate] = useState(0);
+  const [currentChloramineLevel, setCurrentChloramineLevel] = useState(0.5);
+  const [targetFreeChlorine, setTargetFreeChlorine] = useState(1);
+  const [doseRate, setDoseRate] = useState(7.5);
 
   //OUTPUTS:
 
-  const [output, setOutput] = useState(0);
+  //const [output, setOutput] = useState(0);
+
   const [
     outputLitresRequiredToBreakPointReservoir,
     setOutputLitresRequiredToBreakpointReservoir,
   ] = useState(0);
   const [outputTimeToBreakpointReservoir, setOutputTimeToBreakpointReservoir] =
     useState(0);
+  const [
+    outputLitresHypoToIncreaseFreeInReservoir,
+    setOutputLitresHypoToIncreaseFreeInReservoir,
+  ] = useState(0);
+  const [
+    outputTimeToIncreaseFreeInReservoir,
+    setOutputTimeToIncreaseFreeInReservoir,
+  ] = useState(0);
 
   const handleHypoConcChange = (e) => {
     setHypoConc(Number(e.target.value));
@@ -99,14 +108,31 @@ const CalculationForm = () => {
     let litresHypoRequiredToBreakpointIncoming =
       numberOfMolesFreeToBreakpointIncoming / hypoMolesPerLitre;
 
-    //OUTPUTS:------------------------
+    //STEP 8: Volume of hypo required to achive free target in Reservoir after breakpoint has been acheieved
 
-    setOutput(litresHypoRequiredToBreakpointIncoming);
+    let targetFreeInGrams = targetFreeChlorine / 1000;
+    let gramsFreeChlorineToIncreaseFreeInReservoir =
+      targetFreeInGrams * currentLitres;
+    let litresHypoToIncreaseFreeInReservoir =
+      gramsFreeChlorineToIncreaseFreeInReservoir / hypoGramsPerLitre;
+
+    //STEP 9: Time required to acheive free target in Reservoir after breakpoint has been achieved
+
+    let timeToIncreaseFreeInReservoir =
+      litresHypoToIncreaseFreeInReservoir / doseRate;
+
+    //OUTPUTS:------------------------
 
     setOutputLitresRequiredToBreakpointReservoir(
       litresHypoRequiredToBreakpoint
     );
     setOutputTimeToBreakpointReservoir(timeToBreakpoint);
+
+    setOutputLitresHypoToIncreaseFreeInReservoir(
+      litresHypoToIncreaseFreeInReservoir
+    );
+
+    setOutputTimeToIncreaseFreeInReservoir(timeToIncreaseFreeInReservoir);
   };
 
   return (
@@ -165,7 +191,7 @@ const CalculationForm = () => {
         </label>
 
         <label>
-          Current Chloramine Level(mg/L):
+          Current Chloramine Level (mg/L):
           <input
             type="number"
             value={currentChloramineLevel}
@@ -191,12 +217,59 @@ const CalculationForm = () => {
       </form>
 
       <div className="outputs-container">
-        <h3>Reservoir</h3>
-        <div>Output: </div> <div>{output}</div>
-        <div> Volume of hypochlorite required to reach breakpoint (L)</div>
-        <div>{outputLitresRequiredToBreakPointReservoir}</div>
-        <div> Time to reach breakpoint (Hrs)</div>
-        <div>{outputTimeToBreakpointReservoir}</div>
+        <h3>To breakpoint reservoir and achieve target free chlorine level:</h3>
+
+        <div className="card">
+          <div className="output">
+            {(
+              outputLitresRequiredToBreakPointReservoir +
+              outputLitresHypoToIncreaseFreeInReservoir
+            ).toFixed(1)}{" "}
+            L
+          </div>
+          <div> hypochlorite dosed over</div>
+          <div className="output">
+            {(
+              outputTimeToBreakpointReservoir +
+              outputTimeToIncreaseFreeInReservoir
+            ).toFixed(1)}{" "}
+            Hrs
+          </div>
+        </div>
+
+        <div className="info">
+          {outputLitresRequiredToBreakPointReservoir.toFixed(2)} L dosed over{" "}
+          {outputTimeToBreakpointReservoir.toFixed(2)} Hrs to reach breakpoint
+        </div>
+        <div className="info">
+          {outputLitresHypoToIncreaseFreeInReservoir.toFixed(2)} L dosed over{" "}
+          {outputTimeToIncreaseFreeInReservoir.toFixed(2)} Hrs to increase free
+          chlorine to target level{" "}
+        </div>
+
+        <h3>To breakpoint daily flow and achieve target free chlorine level</h3>
+
+        <div className="card">
+          <div className="output">
+            {(
+              outputLitresRequiredToBreakPointReservoir +
+              outputLitresHypoToIncreaseFreeInReservoir
+            ).toFixed(1)}{" "}
+            L
+          </div>
+          <div> hypochlorite dosed over</div>
+          <div className="output">
+            {(
+              outputTimeToBreakpointReservoir +
+              outputTimeToIncreaseFreeInReservoir
+            ).toFixed(1)}{" "}
+            Hrs
+          </div>
+        </div>
+
+        <div className="info">
+          Daily dose required to maintain the free chlorine setpoint
+        </div>
       </div>
     </div>
   );

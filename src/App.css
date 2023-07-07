@@ -44,6 +44,7 @@
 .form-container {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
 }
 .form {
@@ -59,4 +60,19 @@ label {
 
 input {
   margin-left: 10px; /* Optional: Add some left margin for spacing */
+}
+
+.output{
+  font-size: 4em;
+  font-weight: 700;
+}
+.info{
+  font-size: small;
+  opacity: 0.5;
+}
+.card{
+  display: flex;
+  flex-direction: row;
+  align-items:baseline;
+  gap: 3em;
 }
