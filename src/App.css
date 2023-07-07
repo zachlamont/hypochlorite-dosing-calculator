@@ -40,3 +40,23 @@
 .read-the-docs {
   color: #888;
 }
+
+.form-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+input {
+  margin-left: 10px; /* Optional: Add some left margin for spacing */
+}
