@@ -75,13 +75,11 @@ const CalculationForm = () => {
     setDoseRate(Number(e.target.value));
   };
 
-  //const handleSubmit = (e) => {
-  //e.preventDefault();
-
   useEffect(() => {
     const calculateOutputs = () => {
-      // CALCULATION STEPS
       //NH2Cl + 2 HOCl --> NCL3 + 2H2O
+
+      // CALCULATION STEPS
 
       //STEP 1: Moles of chloramine in reservoir
 
@@ -160,7 +158,7 @@ const CalculationForm = () => {
       let timeToIncreaseFreeIncoming =
         litresHypoToIncreaseFreeIncoming / doseRate;
 
-      //SET OUTPUTS:------------------------
+      //SET OUTPUTS:
 
       setOutputLitresRequiredToBreakpointReservoir(
         litresHypoRequiredToBreakpoint
@@ -187,7 +185,6 @@ const CalculationForm = () => {
 
     // Call the calculation function whenever the inputs change
     // Use the same dependencies as the inputs that affect the calculation
-    // E.g., [hypoConc, reservoirVolume, reservoirLevel, ...]
   }, [
     hypoConc,
     reservoirVolume,
@@ -285,8 +282,6 @@ const CalculationForm = () => {
               onChange={handleInput8Change}
             />
           </label>
-
-          {/* <button type="submit">Calculate</button> */}
         </form>
       </div>
 
@@ -316,12 +311,12 @@ const CalculationForm = () => {
           </div>
 
           <div className="info">
-            {outputLitresRequiredToBreakPointReservoir.toFixed(2)} L dosed over{" "}
-            {outputTimeToBreakpointReservoir.toFixed(2)} Hrs to reach breakpoint
+            {outputLitresRequiredToBreakPointReservoir.toFixed(1)} L dosed over{" "}
+            {outputTimeToBreakpointReservoir.toFixed(1)} Hrs to reach breakpoint
           </div>
           <div className="info">
-            {outputLitresHypoToIncreaseFreeInReservoir.toFixed(2)} L dosed over{" "}
-            {outputTimeToIncreaseFreeInReservoir.toFixed(2)} Hrs to increase
+            {outputLitresHypoToIncreaseFreeInReservoir.toFixed(1)} L dosed over{" "}
+            {outputTimeToIncreaseFreeInReservoir.toFixed(1)} Hrs to increase
             free chlorine to target level{" "}
           </div>
         </div>
@@ -353,13 +348,13 @@ const CalculationForm = () => {
           </div>
 
           <div className="info">
-            {outputLitresHypoRequiredToBreakpointIncoming.toFixed(2)} L dosed
-            over {outputTimeToBreakpointIncoming.toFixed(2)} Hrs to reach
+            {outputLitresHypoRequiredToBreakpointIncoming.toFixed(1)} L dosed
+            over {outputTimeToBreakpointIncoming.toFixed(1)} Hrs to reach
             breakpoint
           </div>
           <div className="info">
-            {outputLitresHypoToIncreaseFreeIncoming.toFixed(2)} L dosed over{" "}
-            {outputTimeToIncreaseFreeIncoming.toFixed(2)} Hrs to increase free
+            {outputLitresHypoToIncreaseFreeIncoming.toFixed(1)} L dosed over{" "}
+            {outputTimeToIncreaseFreeIncoming.toFixed(1)} Hrs to increase free
             chlorine to target level{" "}
           </div>
           <br />
@@ -371,14 +366,14 @@ const CalculationForm = () => {
               outputLitresHypoToIncreaseFreeInReservoir +
               outputLitresHypoRequiredToBreakpointIncoming +
               outputLitresHypoToIncreaseFreeIncoming
-            ).toFixed(2)}{" "}
+            ).toFixed(1)}{" "}
             L dosed over{" "}
             {(
               outputTimeToBreakpointReservoir +
               outputTimeToIncreaseFreeInReservoir +
               outputTimeToBreakpointIncoming +
               outputTimeToIncreaseFreeIncoming
-            ).toFixed(2)}{" "}
+            ).toFixed(1)}{" "}
             Hrs required to breakpoint and achieve target free chlorine level{" "}
           </div>
         </div>
