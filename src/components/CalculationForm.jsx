@@ -93,7 +93,7 @@ const CalculationForm = () => {
 
       //STEP 2: Moles of free chlorine required to breakpoint reservoir
 
-      let numberOfMolesFreeToBreakpoint = numberOfMolesChloramineTotal / 2; // Change * to / 
+      let numberOfMolesFreeToBreakpoint = numberOfMolesChloramineTotal; // REMOVED '/2' 
 
       //STEP 3: Volume of hypochlorite required to breakpoint reservoir
 
@@ -119,7 +119,7 @@ const CalculationForm = () => {
       //STEP 6: Moles of free chlorine required to breakpoint incoming
 
       let numberOfMolesFreeToBreakpointIncoming =
-        numberOfMolesChloramineTotalIncoming / 2; // Change * to / 
+        numberOfMolesChloramineTotalIncoming; // REMOVED '/2' 
 
       //STEP 7: Volume of hypochlorite required to breakpoint incoming
 
@@ -275,7 +275,7 @@ const CalculationForm = () => {
           </label>
 
           <label>
-            Dose Rate (L/s):
+            Dose Rate (L/hr):
             <input
               type="number"
               value={doseRate}
